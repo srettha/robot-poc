@@ -27,6 +27,6 @@ workflows:
   test-chrome:
     jobs:
       - test-chrome-browser:
-          name: "test Chrome browser"
+          name: "Test Chrome browser"
       - test-safari-browser:
           name: "Test Safari browser"
