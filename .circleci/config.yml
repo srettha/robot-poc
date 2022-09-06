@@ -1,0 +1,32 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine.
+# See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+
+jobs:
+  test-chrome-browser:
+    docker:
+      - image: cimg/python:3.9.13
+      - image: selenium/standalone-chrome:3
+    steps:
+      - checkout
+      - run:
+          name: "Execute robot command"
+          command: robot -v BROWSER:headlesschrome -v REMOTE_URL:http://localhost:4444/wd/hub --outputdir ./results tests/browser.robot
+  test-safari-browser:
+    macos:
+      xcode: 13.4.1
+    steps:
+      - checkout
+      - run:
+          name: "Execute robot command"
+          command: robot -v BROWSER:safari --outputdir ./results tests/browser.robot
+
+# Invoke jobs via workflows
+# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+workflows:
+  test-chrome:
+    jobs:
+      - test-chrome-browser:
+          name: "test Chrome browser"
+      - test-safari-browser:
+          name: "Test Safari browser"
