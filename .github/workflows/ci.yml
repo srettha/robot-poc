@@ -12,3 +12,8 @@ jobs:
         run: pip3 install -r requirements.txt
       - name: Run tests
         run: robot -v BROWSER:safari --outputdir ./results tests/browser.robot
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: robot-framework results
+          path: results
